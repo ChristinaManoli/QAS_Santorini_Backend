@@ -1,0 +1,46 @@
+Template|Cypher
+Famous local cuisine / products of Santorini|MATCH p=(start{ns0__name:"Santorini"})-[r]->(end) WHERE end:ns1__LocalCuisine OR end:ns1__LocalWine RETURN start.ns0__name AS Entity, Type(r) AS Relation,  end.ns0__name AS Entity2_Name, end.ns0__description AS Entity2_Description
+What to eat in Santorini?|MATCH p=(start{ns0__name:"Santorini"})-[r:ns0__EatAction]->(end:ns1__LocalCuisine) RETURN start.ns0__name AS Entity, Type(r) AS Relation,  end.ns0__name AS Entity2_Name, end.ns0__description AS Entity2_Description
+What to drink in Santorini?|MATCH p=(start{ns0__name:"Santorini"})-[r:ns0__DrinkAction]->(end:ns1__LocalWine) RETURN start.ns0__name AS Entity, Type(r) AS Relation,  end.ns0__name AS Entity2_Name, end.ns0__description AS Entity2_Description
+People born in Santorini|MATCH p=(start{ns0__name:"Santorini"})-[r:ns0__birthPlace]->(end:ns1__Notable_Person) RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity2_Name, end.ns0__jobTitle AS Entity2_JobTitle
+People who died in Santorini|MATCH p=(start{ns0__name:"Santorini"})-[r:ns0__deathPlace]->(end:ns1__Notable_Person) RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity2_Name, end.ns0__jobTitle AS Entity2_JobTitle
+Is <Notable Person> born in Santorini|MATCH p=(start{ns0__name:"Santorini"})-[r:ns0__birthPlace]->(end:ns1__Notable_Person) WHERE end.ns0__name="<Notable Person>" RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity_Name, end.ns0__jobTitle AS Entity_JobTitle
+Historical Info about <Place>|MATCH (p) WHERE p.ns0__name = "<Place>" RETURN p.ns1__Brief_History AS Brief_History;
+Villages in Santorini|MATCH (start{ns0__name:"Santorini"})-[r:ns0__containsPlace]->(end:ns1__Village)RETURN start.ns0__name AS Entity, Type(r) AS Relation, end AS Entity2
+What is Santorini also known as?|MATCH (start{ns0__name:"Santorini"})-[r:ns1__Also_Known_As]->(end)RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity2_Name, end.ns1__Name_Origin AS Entity2_Name_Origin
+Myths about <Place>|MATCH (start{ns0__name:"<Place>"})-[r:ns1__Myths]->(end)RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity2_Name, end.ns0__description AS Entity2_Description
+How can I get around in <Place>?|MATCH (start{ns0__name:"<Place>"})-[r:ns1__Get_Around]->(end)RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity2_Name
+What do you know about <Place>?|MATCH p=(start{ns0__name:"<Place>"})-[r]->(end) RETURN start.ns0__name AS Entity, labels(start) AS Labels, Type(r) AS Relation, end LIMIT 10
+What are some family friendly places?|MATCH (start{ns0__name:"Santorini"})-[r:ns0__containsPlace]->(end:ns1__FamilyFriendly_Place)RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity2_Name
+What are some romantic places?|MATCH (start{ns0__name:"Santorini"})-[r:ns0__containsPlace]->(end:ns1__Romantic_Place)RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity2_Name
+What are the best attractions someone should see in <Place>|MATCH p=(start{ns0__name:"<Place>"})-[*1..2]->(end:ns0__TouristAttraction) RETURN start.ns0__name AS Entity, end.ns0__name AS Entity_Name
+What attractions are close to <Beach>|MATCH p=(start{ns0__name:"<Beach>"})<-[r:ns1__Visit]-(middle)-[r:ns1__See]->(end:ns0__TouristAttraction) RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity_Name
+Churches in <Place>|MATCH p=(start{ns0__name:"<Place>"})-[*1..2]->(end:ns1__Place_of_Worship) RETURN start.ns0__name AS Entity, end.ns0__name AS Entity_Name
+Romantic attractions for couples|MATCH p=(start{ns0__name:"Santorini"})-[*1..2]->(end:ns1__Romantic_Attraction) RETURN start.ns0__name AS Entity, end.ns0__name AS Entity_Name
+What can a couple do in <Place>?|MATCH p=(start{ns0__name:"<Place>"})-[r:ns1__Do]->(end:ns1__Romantic_Activity) RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity2_Name
+What to do in <Place>?|MATCH p=(start{ns0__name:"<Place>"})-[r:ns1__Do]->(end:ns1__Activity) RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity2_Name
+Can I go for a <Tour> in <Place>|MATCH p=(start{ns0__name:"<Place>"})-[r:ns1__Do]->(end:ns1__Tour) WHERE end.ns0__name="<Tour>" RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity2_Name
+Activities to do in Santorini|MATCH p=(start{ns0__name:"Santorini"})-[*1..3]->(end:ns1__Activity) RETURN start.ns0__name AS Entity, end.ns0__name AS Entity2_Name
+Is <Festival> taking place during <Month>|MATCH (p) WHERE p.ns0__name="<Festival>" RETURN p.ns0__name, p.ns1__during;
+Can I try <Activity>?|MATCH p=(start{ns0__name:"Santorini"})-[*1..3]->(end:ns1__Activity) WHERE end.ns0__name="<Activity>" RETURN start.ns0__name AS Entity, end.ns0__name AS Entity2_Name
+What water sports can I do in <Beach>?|MATCH p=(start{ns0__name:"<Beach>"})-[r:ns1__Do]->(end:ns1__Water_Activity) RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity2_Name
+Beaches in <Place>|MATCH p=(start{ns0__name:"<Place>"})-[r:ns1__Visit]->(end:ns0__Beach) RETURN start.ns0__name AS Entity, Type(r) AS Relation, end AS Entity2
+Quiet Beaches in <Place>|MATCH p=(start{ns0__name:"<Place>"})-[r:ns1__Visit]->(end:ns1__Quiet) RETURN start.ns0__name AS Entity, Type(r) AS Relation, end AS Entity2
+Family-Friendly Beaches in <Place>|MATCH p=(start{ns0__name:"<Place>"})-[r:ns1__Visit]->(end:ns1__FamilyFriendly_Beach) RETURN start.ns0__name AS Entity, Type(r) AS Relation, end AS Entity2
+What water sports to try in <Beach>?|MATCH p=(start{ns0__name:"<Beach>"})-[r:ns1__Do]->(end:ns1__Water_Activity) RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity2_Name
+Organized beach in <Place>|MATCH p=(start{ns0__name:"<Place>"})-[r:ns1__Visit]->(end) WHERE end:ns1__Well_Organized OR end:ns1__Partly_Organized RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity2_Name
+Beach with blue flag in <Place>|MATCH p=(start{ns0__name:"<Place>"})-[r]->(end) WHERE end.ns1__Blue_Flag RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity2_Name
+Where is <Beach>?|MATCH p=(start:ns1__Village)-[r]->(end:ns0__Beach) WHERE end.ns0__name="<Beach>" RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity2_Name
+What are some Quiet beaches?|MATCH p=(start)-[r:ns1__Visit]->(end:ns1__Quiet) RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity2_Name
+Where can I find sandy beaches?|MATCH p=(start:ns1__Village)-[r:ns1__Visit]->(m:ns0__Beach)-[:ns1__sandType]->(end) WHERE end.ns0__name CONTAINS 'Sand' RETURN start.ns0__name AS Entity, Type(r) AS Relation, m.ns0__name AS Entity2_Name, end.ns0__name AS Type_Of_Sand
+What are some nudist beaches?|MATCH p=(start)-[:ns1__Visit]->(end:ns1__Nudism_Friendly) RETURN p
+What do you know about <Beach>?|MATCH p=(start{ns0__name:"<Beach>"})-[r]->(end) RETURN start.ns0__name AS Entity, labels(start) AS Labels, Type(r) AS Relation, end LIMIT 10
+Are there any well-organized beaches in <Place> and what can I do there?|MATCH p=(start{ns0__name:"<Place>"})-[r:ns1__Visit]->(m:ns1__Well_Organized)-[r:ns1__Do]->(end) RETURN start.ns0__name AS Entity, m AS Beach , Type(r) AS Relation, end.ns0__name AS Entity2_Name
+What is the weather of Santorini|MATCH p=(start{ns0__name:"Santorini"})-[r:ns1__weather]->(end:ns1__Climate) RETURN start.ns0__name AS Entity, Type(r) AS Relation, end
+What is the weather like in <Month>?|MATCH p=(start{ns0__name:"Santorini"})-[r:ns1__weather]->(end:ns1__Climate) WHERE end.ns0__name="<Month> Weather" RETURN start.ns0__name AS Entity, Type(r) AS Relation, end
+Where can I find a hospital or medical center?|MATCH p=(start)-[r:ns1__healthcare]->(end) WHERE end:ns1__Medical_Center OR end:ns0__Hospital RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity_Name
+Hospitals in <Place>|MATCH p=(start{ns0__name:"<Place>"})-[r:ns1__healthcare]->(end:ns0__Hospital) RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity_Name
+What should I know before going to <Place>?|MATCH p=(start{ns0__name:"<Place>"})-[r:ns1__Useful_Information]->(end)-[:ns1__answer]->(a) RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity_Name, a.ns0__name AS Answer
+What papers do I need in order to rent a car in Greece?|MATCH p=(start:ns1__Driving_Info)-[r:ns1__answer]->(end) WHERE start.ns0__name = "Rental Car License" RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity_Name
+Where can I find an ATM?|MATCH p=(start)-[r:ns1__Useful_Information]->(end:ns1__Financial_Info) WHERE start:ns1__Village OR end.ns0__name="Cash machines (ATM's)" RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity_Name, end.ns0__description AS Description
+What is some important driving information?|MATCH p=(start)-[r:ns1__Useful_Information]->(end:ns1__Driving_Info)-[*0..1]->() RETURN start.ns0__name AS Entity, Type(r) AS Relation, end.ns0__name AS Entity_Name, end.ns0__description AS Description, a
