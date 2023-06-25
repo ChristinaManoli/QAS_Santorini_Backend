@@ -214,8 +214,6 @@ def Answer_Retrieval(Question, templates, Final_predictions, second):
   return answer, nl, answer2
 
 
-
-
 @app.route('/api/QASantorini', methods=['POST'])
 def qa_endpoint():
     Question = request.json['argument']
